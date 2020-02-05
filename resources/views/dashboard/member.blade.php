@@ -29,10 +29,12 @@
                                             'class'        => 'form-inline js-confirm',
                                             'data-confirm' => "Anda yakin hendak mengembalikan " . $borrowLog->book->title . "?"] ) !!}
                                             
-                                            {{ $borrowLog->book->title }}
                                             <div class="text-right">
-                                                {!! Form::submit('Kembalikan', ['class'=>'btn btn-sm btn-outline-warning float-right']) !!}
-                                                {!! Form::close() !!}
+                                                <button class="btn">
+                                                    {!! Form::submit('Kembalikan', ['class'=>'btn btn-sm btn-outline-warning text-right']) !!}
+                                                    {!! Form::close() !!}
+                                                </button>
+                                                {{ $borrowLog->book->title }}
                                             </div>
                                         </li>
                                     @endforeach
