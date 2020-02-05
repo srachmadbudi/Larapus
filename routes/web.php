@@ -11,33 +11,45 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', 'GuestController@index');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 // Route::get('nama-url', ['middleware'=>'guest', 'uses'=>'MyController@myMethod']);
 
-Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function () {
-    // Route diisi disini...
-    Route::resource('authors', 'AuthorsController');
+// Route::group(['prefix'=>'admin', 'middleware'=>['auth']], function () {
+//     // Route diisi disini...
+//     Route::resource('authors', 'AuthorsController');
+// });
+
+Route::group(['middleware' => 'web'], function () {
+    Route::group(['prefix'=>'admin', 'middleware'=>['auth', 'role:admin']], function () {
+        Route::resource('authors', 'AuthorsController');
+        Route::resource('books', 'BooksController');
+  });
 });
 
-use DataTables;
+Route::get('books/{book}/borrow', [
+  'middleware' => ['auth', 'role:member'],
+  'as'         => 'guest.books.borrow',
+  'uses'       => 'BooksController@borrow'
+]);
 
-Route::get('user-data', function() {
-	$model = App\User::query();
-
-	return DataTables::eloquent($model)->addColumns(['foo','bar','buzz'=>"red"])->toJson();
-});
+Route::put('books/{book}/return', [
+  'middleware' => ['auth', 'role:member'],
+  'as'         => 'member.books.return',
+  'uses'       => 'BooksController@returnBack'
+]);

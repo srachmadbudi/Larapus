@@ -234,7 +234,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Laratrust' => Laratrust\LaratrustFacade::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-        // 'Builder' => Yajra\DataTables\Facades\Html\Builder::class
+        
     ],
 
 ];
