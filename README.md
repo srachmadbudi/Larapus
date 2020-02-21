@@ -120,7 +120,7 @@ state2=$(cut -d ' ' -f2 <<<"$state2")
 echo -e "1.b) State dengan profit terkecil adalah $state1 dan $state2\n"
 ```
 Syntax diatas berfungsi untuk memisahkan komponen dari hasil pencarian yang dilakukan (Jumlah profit[spasi]State).
-`cut -d $'\n'` Memisahkan komonen berdasarkan enter, `-f2` menampilkan field pertama dari komponen tersebut  `cut -d ' '` Memisahkan komonen berdasarkan spasi, `-f2` menampilkan field kedua dari komponen tersebut (hanya nama regionnya saja yang ditampilkan).
+`cut -d $'\n'` Memisahkan komonen berdasarkan enter, `-f1` menampilkan field pertama dari komponen tersebut  `cut -d ' '` Memisahkan komonen berdasarkan spasi, `-f2` menampilkan field kedua dari komponen tersebut (hanya nama regionnya saja yang ditampilkan).
 
 
 ### 1.c
@@ -162,3 +162,4 @@ echo -e  "1.c) Produk yang memiliki profit paling sedikit berdasarkan negara bag
      $state1 dan $state2 adalah sebagai berikut:\n
  -$p1\n -$p2\n -$p3\n -$p4\n -$p5\n -$p6\n -$p7\n -$p8\n -$p9\n -$p10\n"
 ```
+Penjelasannya sama seperti bagian a dan b, yang berbeda adalah pada bagian 1.c ini kita sebagai yang sudah jago mengolah data membantu Whits untuk menampilkan 10 produk (product name) yang memiliki keuntungan (profit) paling sedikit berdasarkan 2 negara bagian (state) hasil poin b.
