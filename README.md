@@ -1,78 +1,120 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+# SoalShiftSISOP20_modul1_D09
+```
+Rachmad Budi Santoso    05111840000122
+Khofifah Nurlaela       05111840000025
+```
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## soal1
+> Whits adalah seorang mahasiswa teknik informatika. Dia mendapatkan tugas praktikum
+untuk membuat laporan berdasarkan data yang ada pada file “Sample-Superstore.tsv”.
+Namun dia tidak dapat menyelesaikan tugas tersebut. Laporan yang diminta berupa :
+>- a. Tentukan wilayah bagian (region) mana yang memiliki keuntungan (profit) paling
+sedikit!
+>- b. Tampilkan 2 negara bagian (state) yang memiliki keuntungan (profit) paling
+sedikit berdasarkan hasil poin a!
+>- c. Tampilkan 10 produk (product name) yang memiliki keuntungan (profit) paling
+sedikit berdasarkan 2 negara bagian (state) hasil poin b!
 
-## About Laravel
+> Whits memohon kepada kalian yang sudah jago mengolah data untuk mengerjakan
+laporan tersebut. *Gunakan Awk dan Command pendukung
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 1.a
+```
+#!/bin/bash
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+#number1a
+onea=$(awk -F "\t" '
+{groupby[$13]+=$21}
+END {
+        for(reg in groupby) {
+                print groupby[reg], reg
+        }
+}
+' Sample-Superstore.tsv | sort -g | head -2 | tail -1)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+region=$(cut -d ' ' -f2 <<<"$onea")
+echo -e "1.a) Region dengan profit terkecil adalah $region\n"
+```
+Pada bagian 1.a ini kita sebagai yang sudah jago mengolah data membantu Whits untuk mentukan wilayah bagian (region) mana yang memiliki keuntungan (profit) paling sedikit.
+```
+onea=$(awk -F "\t" '
+```
+Pada syntax tersebut kami menggunakan awk untuk membaca data dari file berdasarkan separator tab `\t` sebagai pemisahnya.
 
-## Learning Laravel
+Selanjutnya, syntax `{groupby[$13]+=$21}` berfungsi untuk mengelompokkan dan menambahkan isi array berdasarkan profit pada kolom `$21` dari setiap region pada kolom `$13`.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+```
+#______________________________________________________________________
+#number1b
+oneb=$(awk -F "\t" -v reg="$region" '
+$13 ~ reg {
+        groupby[$11]+=$21
+}
+END {
+        for( state in groupby ) {
+                print groupby[state], state
+        }
+}
+' Sample-Superstore.tsv | sort -g | head -2)
+
+state1=$(cut -d $'\n' -f1 <<<"$oneb")
+state1=$(cut -d ' ' -f2 <<<"$state1")
+state2=$(cut -d $'\n' -f2 <<<"$oneb")
+state2=$(cut -d ' ' -f2 <<<"$state2")
+echo -e "1.b) State dengan profit terkecil adalah $state1 dan $state2\n"
+```
+
+```
+<code>
+#_______________________________________________________________________
+#number1c
+onec=$(awk -F "\t" -v st1="$state1" -v st2="$state2" '
+$11 ~ st1 || $11 ~ st2 {
+        groupby[$17]+=$21
+}
+END {
+        for( product in groupby ) {
+                print groupby[product], product
+        }
+}
+' Sample-Superstore.tsv | sort -g | head -10)
+
+p1=$(cut -d $'\n' -f1 <<<"$onec")
+p1=$(cut --complement -d ' ' -f1 <<<"$p1")
+p2=$(cut -d $'\n' -f2 <<<"$onec")
+p2=$(cut --complement -d ' ' -f1 <<<"$p2")
+p3=$(cut -d $'\n' -f3 <<<"$onec")
+p3=$(cut --complement -d ' ' -f1 <<<"$p3")
+p4=$(cut -d $'\n' -f4 <<<"$onec")
+p4=$(cut --complement -d ' ' -f1 <<<"$p4")
+p5=$(cut -d $'\n' -f5 <<<"$onec")
+p5=$(cut --complement -d ' ' -f1 <<<"$p5")
+p6=$(cut -d $'\n' -f6 <<<"$onec")
+p6=$(cut --complement -d ' ' -f1 <<<"$p6")
+p7=$(cut -d $'\n' -f7 <<<"$onec")
+p7=$(cut --complement -d ' ' -f1 <<<"$p7")
+p8=$(cut -d $'\n' -f8 <<<"$onec")
+p8=$(cut --complement -d ' ' -f1 <<<"$p8")
+p9=$(cut -d $'\n' -f9 <<<"$onec")
+p9=$(cut --complement -d ' ' -f1 <<<"$p9")
+p10=$(cut -d $'\n' -f10 <<<"$onec")
+p10=$(cut --complement -d ' ' -f1 <<<"$p10")
+echo -e  "1.c) Produk yang memiliki profit paling sedikit berdasarkan negara bagian
+     $state1 dan $state2 adalah sebagai berikut:\n
+ -$p1\n -$p2\n -$p3\n -$p4\n -$p5\n -$p6\n -$p7\n -$p8\n -$p9\n -$p10\n"
+</code>
+```
