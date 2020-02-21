@@ -43,20 +43,30 @@ Pada syntax tersebut kami menggunakan awk untuk membaca data dari file berdasark
 
 Selanjutnya, syntax `{groupby[$13]+=$21}` berfungsi untuk mengelompokkan dan menambahkan isi array berdasarkan profit pada kolom `$21` dari setiap region pada kolom `$13`.
 
+```
+END {
+        for(reg in groupby) {
+                print groupby[reg], reg
+        }
+}
+```
+Pada bagian END, kami melakukan looping untuk menampilkan seluruh profit `groupby[reg]` dari setiap region `reg`.
+
+`sort -g` Mengurutkan data secara general, termasuk positif dan negatif.
+`head -2` Menampilkan 2 data teratas dengan profit terkecil.
+`tail -1` Menampilkan 1 data dari bawah.
+
+Hal ini dilakukan karena kami melakukan perhitungan sejak kolom pertama, dimana pada kolom `$13` dimulai dengan title `region` yang berisi profit terkecil karena tidak memiliki data atau dengan kata lain berisi string huruf bukan angka sehingga menjadi yang terkecil. Untuk mengabaikan judul kolom tersebut maka digunakanlah cara diatas.
+
+```
+region=$(cut -d ' ' -f2 <<<"$onea")
+echo -e "1.a) Region dengan profit terkecil adalah $region\n"
+```
+Syntax diatas berfungsi untuk memisahkan komponen dari hasil pencarian yang dilakukan (Jumlah profit[spasi]Region).
+`cut -d ''` Memisahkan komonen berdasarkan spasi, `-f2` menampilkan field kedua dari komponen tersebut (hanya nama regionnya saja yang ditampilkan).
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+### 1.b
 ```
 #______________________________________________________________________
 #number1b
@@ -78,8 +88,9 @@ state2=$(cut -d ' ' -f2 <<<"$state2")
 echo -e "1.b) State dengan profit terkecil adalah $state1 dan $state2\n"
 ```
 
+
+### 1.c
 ```
-<code>
 #_______________________________________________________________________
 #number1c
 onec=$(awk -F "\t" -v st1="$state1" -v st2="$state2" '
@@ -116,5 +127,4 @@ p10=$(cut --complement -d ' ' -f1 <<<"$p10")
 echo -e  "1.c) Produk yang memiliki profit paling sedikit berdasarkan negara bagian
      $state1 dan $state2 adalah sebagai berikut:\n
  -$p1\n -$p2\n -$p3\n -$p4\n -$p5\n -$p6\n -$p7\n -$p8\n -$p9\n -$p10\n"
-</code>
 ```
