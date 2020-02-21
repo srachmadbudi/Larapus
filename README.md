@@ -87,6 +87,40 @@ state2=$(cut -d $'\n' -f2 <<<"$oneb")
 state2=$(cut -d ' ' -f2 <<<"$state2")
 echo -e "1.b) State dengan profit terkecil adalah $state1 dan $state2\n"
 ```
+Pada bagian 1.b ini kita sebagai yang sudah jago mengolah data membantu Whits untuk mentukan 2 negara bagian (state) yang memiliki keuntungan (profit) paling sedikit berdasarkan hasil poin a.
+
+```
+oneb=$(awk -F "\t" -v reg="$region" '
+```
+Pada syntax tersebut kami menggunakan awk untuk membaca data dari file berdasarkan separator tab `\t` sebagai pemisahnya dan menggunakan data `$region` yang sudah diperoleh pada bagian a.
+
+```
+$13 ~ reg {
+        groupby[$11]+=$21
+}
+```
+Selanjutnya, syntax `{groupby[$13]+=$21}` berfungsi untuk mengelompokkan dan menambahkan isi array berdasarkan profit pada kolom `$21` dari setiap state pada kolom `$11` yang sebelumnya sudah difilter menggunakan data region(regex `~` mencari komponen yang mengandung `reg`).
+
+```
+END {
+        for( state in groupby ) {
+                print groupby[state], state
+        }
+}
+```
+Pada bagian END, kami melakukan looping untuk menampilkan seluruh profit `groupby[state]` dari setiap negara bagian `state`.
+`sort -g` Mengurutkan data secara general, termasuk positif dan negatif.
+`head -2` Menampilkan 2 data teratas dengan profit terkecil. 
+
+```
+state1=$(cut -d $'\n' -f1 <<<"$oneb")
+state1=$(cut -d ' ' -f2 <<<"$state1")
+state2=$(cut -d $'\n' -f2 <<<"$oneb")
+state2=$(cut -d ' ' -f2 <<<"$state2")
+echo -e "1.b) State dengan profit terkecil adalah $state1 dan $state2\n"
+```
+Syntax diatas berfungsi untuk memisahkan komponen dari hasil pencarian yang dilakukan (Jumlah profit[spasi]State).
+`cut -d $'\n'` Memisahkan komonen berdasarkan enter, `-f2` menampilkan field pertama dari komponen tersebut  `cut -d ' '` Memisahkan komonen berdasarkan spasi, `-f2` menampilkan field kedua dari komponen tersebut (hanya nama regionnya saja yang ditampilkan).
 
 
 ### 1.c
